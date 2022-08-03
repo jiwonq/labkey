@@ -5,8 +5,12 @@ plugins {
     id "java"
     id "maven-publish"
     id "org.springframework.boot" version "${springBootVersion}"
-    id "io.spring.dependency-management" version "1.0.8.RELEASE"
+    id "io.spring.dependency-management" version "1.0.12.RELEASE"
 }
+
+// 'dependency-management' plugin doesn't allow us to use 'resolutionStrategy.force' to lock versions
+//ext['spring-framework.version'] = springVersion
+ext['log4j2.version'] = log4j2Version
 
 sourceSets {
     main {
@@ -37,6 +41,14 @@ dependencies {
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
+//
+//// Override ext['spring-framework.version']
+//dependencyManagement {
+//    dependencies {
+//        // See root 'build.gradle' for reasoning
+//        dependency "org.springframework:spring-expression:5.3.22"
+//    }
+//}
 
 BuildUtils.addLabKeyDependency(project: project, config: "implementation", depProjectPath: BuildUtils.getBootstrapProjectPath(gradle))
 
